@@ -1,39 +1,64 @@
 <?php
-    $hotels =[
+    $hotels = [
         [
             'name' => 'Hotel Belvedere',
-            'description' => 'Hotel Belvedere Descrizione',
+            'description' => 'Quaint, Inviting, Charming',
             'parking' => true,
-            'vote' => 4,
+            'vote' => 3,
             'distance_to_center' => 10.4
         ],
         [
             'name' => 'Hotel Futuro',
-            'description' => 'Hotel Futuro Descrizione',
+            'description' => 'Majestic, Historic, Sophisticated',
             'parking' => true,
             'vote' => 2,
             'distance_to_center' => 2
         ],
         [
             'name' => 'Hotel Rivamare',
-            'description' => 'Hotel Rivamare Descrizione',
+            'description' => 'Rustic, Scenic, Serene',
             'parking' => false,
             'vote' => 1,
-            'distance_to_center' => 1
+            'distance_to_center' => 2.4
         ],
         [
             'name' => 'Hotel Bellavista',
-            'description' => 'Hotel Bellavista Descrizione',
+            'description' => 'Elegant, Luxurious, Upscale',
             'parking' => false,
             'vote' => 5,
             'distance_to_center' => 5.5
         ],
         [
             'name' => 'Hotel Milano',
-            'description' => 'Hotel Milano Descrizione',
+            'description' => 'Modern, Stylish, Trendy',
             'parking' => true,
             'vote' => 2,
             'distance_to_center' => 50
         ],
-    ]
+        [
+            'name' => 'Hotel Ognissanti',
+            'description' => 'Beachfront, Tropical, Relaxing',
+            'parking' => true,
+            'vote' => 4,
+            'distance_to_center' => 1.5
+        ],
+    ];
+
+    $filteredHotels = $hotels;
+    $filter = $_POST['hotels_filter'] ?? null;
+
+    if(isset($_POST['hotels_filter'])) {
+        $filteredHotels = [];
+    }
+
+    if ($filter === "all") {
+        $filteredHotels = $hotels;
+    }
+
+    if ($filter === "w_parking") {
+        $filteredHotels = [];
+        foreach($hotels as $hotel) {
+            if ($hotel["parking"]) $filteredHotels[] = $hotel;
+        }
+    }
 ?>

@@ -1,5 +1,23 @@
 <?php
     require_once "./main.php";
+
+    $filteredHotels = $hotels;
+    $filter = $_POST['hotels_filter'] ?? null;
+
+    if(isset($_POST['hotels_filter'])) {
+        $filteredHotels = [];
+    }
+
+    if ($filter === "all") {
+        $filteredHotels = $hotels;
+    }
+
+    if ($filter === "w_parking") {
+        $filteredHotels = [];
+        foreach($hotels as $hotel) {
+            if ($hotel["parking"]) $filteredHotels[] = $hotel;
+        }
+    }
 ?>
 
 <!DOCTYPE html>

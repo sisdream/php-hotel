@@ -5,26 +5,13 @@
     $filter = $_GET['hotels_filter'] ?? null;
     $filter_vote = $_GET['filter_vote'] ?? false;
 
-    if(isset($_GET['hotels_filter'])) {
-        $filteredHotels = [];
-    }
-
-    if ($filter === "all") {
-        $filteredHotels = $hotels;
-    }
-
     if ($filter === "w_parking") {
-        $filteredHotels = [];
-        foreach($hotels as $hotel) {
-            if ($hotel["parking"]) $filteredHotels[] = $hotel;
-        }
+        $filteredHotels = array_filter($filteredHotels, fn($hotel) => $hotel["parking"]);
     }
 
     if($filter_vote) {
-        $filteredHotels = array_filter($hotels, fn($hotel) => $hotel["vote"] >= $filter_vote);
+        $filteredHotels = array_filter($filteredHotels, fn($hotel) => $hotel["vote"] >= $filter_vote);
     }
-
-    var_dump($filter_vote);
 ?>
 
 <!DOCTYPE html>
@@ -57,11 +44,11 @@
     <table class="table table-hover">
         <thead>
             <tr>
-                <?php foreach ($filteredHotels[0] as $key => $value ) : ?>
+                <?php foreach ($hotels[0] as $key => $value ) : ?>
                 <th scope="col" class="fw-bold text-uppercase">
                     <?php
                         if ($key === 'distance_to_center') {
-                        $key = 'Distance to Center';
+                            $key = 'Distance to Center';
                         }
                         echo "$key";
                     ?>
@@ -76,13 +63,13 @@
                 <td scope="col">
                     <?php
                         if ($key === 'parking') {
-                        $value ? $value = 'Available' : $value ='Not Available'; 
+                            $value ? $value = 'Available' : $value ='Not Available'; 
                         }
                         if ($key === 'vote') {
-                        $value = $value . ' ' . '<i class="fa-solid fa-star" style="color: #FFC107;"></i>';
+                            $value = $value . ' ' . '<i class="fa-solid fa-star" style="color: #FFC107;"></i>';
                         }
                         if ($key === 'distance_to_center') {
-                        $value = $value . ' ' . 'km';
+                            $value = $value . ' ' . 'km';
                         }
                         echo "$value";
                     ?>

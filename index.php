@@ -2,9 +2,9 @@
     require_once "./main.php";
 
     $filteredHotels = $hotels;
-    $filter = $_POST['hotels_filter'] ?? null;
+    $filter = $_GET['hotels_filter'] ?? null;
 
-    if(isset($_POST['hotels_filter'])) {
+    if(isset($_GET['hotels_filter'])) {
         $filteredHotels = [];
     }
 
@@ -33,7 +33,7 @@
 <body>
     <h1 class="text-center fw-bold mb-3"><i class="fa-solid fa-hotel text-warning"></i> Hotels</h1>
 
-    <form action="index.php" method="POST" class="d-flex mb-2">
+    <form action="index.php" method="GET" class="d-flex mb-2">
         <select class="form-select" name="hotels_filter" id="hotels" aria-label="hotels">
             <option value="all">All Hotels</option>
             <option value="w_parking">Hotels with Parking</option>
@@ -41,7 +41,7 @@
         <button type="submit" class="btn btn-warning ms-2">Submit</button>
     </form>
 
-    <table class="table">
+    <table class="table table-hover">
         <thead>
             <tr>
                 <?php foreach ($filteredHotels[0] as $key => $value ) : ?>

@@ -3,6 +3,7 @@
 
     $filteredHotels = $hotels;
     $filter = $_GET['hotels_filter'] ?? null;
+    $filter_vote = $_GET['filter_vote'] ?? false;
 
     if(isset($_GET['hotels_filter'])) {
         $filteredHotels = [];
@@ -18,6 +19,12 @@
             if ($hotel["parking"]) $filteredHotels[] = $hotel;
         }
     }
+
+    if($filter_vote) {
+        $filteredHotels = array_filter($hotels, fn($hotel) => $hotel["vote"] >= $filter_vote);
+    }
+
+    var_dump($filter_vote);
 ?>
 
 <!DOCTYPE html>
@@ -33,13 +40,19 @@
 <body>
     <h1 class="text-center fw-bold mb-3"><i class="fa-solid fa-hotel text-warning"></i> Hotels</h1>
 
-    <form action="index.php" method="GET" class="d-flex mb-2">
+    <div class="container">
+    <form action="index.php" method="GET" class="d-flex flex-column mb-2">
         <select class="form-select" name="hotels_filter" id="hotels" aria-label="hotels">
             <option value="all">All Hotels</option>
             <option value="w_parking">Hotels with Parking</option>
         </select>
+        <div class="mb-3">
+            <label for="filter_vote" class="form-lable">Voto</label>
+            <input type="number" class="form-control" id="filter_vote" name="filter_vote" min="1" max="5">
+        </div>
         <button type="submit" class="btn btn-warning ms-2">Submit</button>
     </form>
+    </div>
 
     <table class="table table-hover">
         <thead>
